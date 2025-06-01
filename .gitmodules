@@ -1,0 +1,6 @@
+[submodule "ai"]
+	path = ai
+	url = https://github.com/rhuanbarros/personal-chat-ai.git
+[submodule "ui"]
+	path = ui
+	url = https://github.com/rhuanbarros/personal-chat-ui.git
