@@ -17,3 +17,15 @@ docker compose up -d
 # open folder in dev container
 
 ```
+
+
+## Langfuse setup
+
+For Langfuse to work in the same network, I needed to put this in the docker-compose.yml file
+
+```yml
+networks:
+  app-network:
+    external: true
+    name: personal-chat-project_app-network
+```
