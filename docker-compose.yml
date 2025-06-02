@@ -20,16 +20,16 @@ services:
     networks:
       - app-network
     ports:
-      - "3000:3000"
+      - "3010:3000"
     depends_on:
       - db
-      - backend
+      - ai
     environment:
       - NODE_ENV=development
-      - BACKEND_URL=http://backend:8000
+      - BACKEND_URL=http://ai:8010
 
   # Python FastAPI Backend Service  
-  backend:
+  ai:
     build:
       context: ./ai
       dockerfile: .devcontainer/Dockerfile
@@ -40,12 +40,12 @@ services:
     networks:
       - app-network
     ports:
-      - "8000:8000"
+      - "8010:8000"
     depends_on:
       - db
     environment:
       - PYTHON_ENV=development
-      - DATABASE_URL=mongodb://db:27017/personal_chat
+      - DATABASE_URL=mongodb://db:27020/personal_chat
 
   # MongoDB Database Service
   db:
@@ -54,7 +54,7 @@ services:
     networks:
       - app-network
     ports:
-      - "27017:27017"
+      - "27020:27017"
     volumes:
       - mongodb-data:/data/db
     # environment:
