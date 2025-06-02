@@ -4,13 +4,16 @@ This project consists of a Node.js frontend with MongoDB database and Python Fas
 
 ```bash
 #first, run the database
-personal-chat git:(main) ✗ pwd
-/home/rhuanbarros/temporario/personal-chat
-
 docker compose up db -d
 
+#second, run langfuse
+cd langfuse 
+docker compose up -d
 
-#second, run AI project
-#third, run UI project
+#third, run AI project
+# open folder in dev container
+
+#fourth, run UI project
+# open folder in dev container
 
 ```
