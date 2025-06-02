@@ -1,0 +1,66 @@
+version: '3.8'
+
+name: personal-chat-project
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  # Node.js Frontend Service
+  ui:
+    build: 
+      context: ./ui
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ./ui:/workspace:cached
+      - /workspace/node_modules
+    working_dir: /workspace
+    command: sleep infinity
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - backend
+    environment:
+      - NODE_ENV=development
+      - BACKEND_URL=http://backend:8000
+
+  # Python FastAPI Backend Service  
+  backend:
+    build:
+      context: ./ai
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ./ai:/workspace:cached
+    working_dir: /workspace
+    command: sleep infinity
+    networks:
+      - app-network
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - PYTHON_ENV=development
+      - DATABASE_URL=mongodb://db:27017/personal_chat
+
+  # MongoDB Database Service
+  db:
+    image: mongo:latest
+    restart: unless-stopped
+    networks:
+      - app-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    # environment:
+      # - MONGO_INITDB_ROOT_USERNAME=root
+      # - MONGO_INITDB_ROOT_PASSWORD=example
+      # - MONGO_INITDB_DATABASE=personal_chat
+
+volumes:
+  mongodb-data:
