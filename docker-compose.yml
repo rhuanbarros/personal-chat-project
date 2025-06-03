@@ -11,12 +11,7 @@ services:
   ui:
     build: 
       context: ./ui
-      dockerfile: .devcontainer/Dockerfile
-    volumes:
-      - ./ui:/workspace:cached
-      - /workspace/node_modules
-    working_dir: /workspace
-    command: sleep infinity
+      dockerfile: Dockerfile
     networks:
       - app-network
     ports:
@@ -25,18 +20,14 @@ services:
       - db
       - ai
     environment:
-      # - NODE_ENV=development
-      - BACKEND_URL=http://ai:8010
+      - NODE_ENV=production
+      - BACKEND_URL=http://ai:8000
 
   # Python FastAPI Backend Service  
   ai:
     build:
       context: ./ai
-      dockerfile: .devcontainer/Dockerfile
-    volumes:
-      - ./ai:/workspace:cached
-    working_dir: /workspace
-    command: sleep infinity
+      dockerfile: Dockerfile
     networks:
       - app-network
     ports:
@@ -44,8 +35,8 @@ services:
     depends_on:
       - db
     environment:
-      # - PYTHON_ENV=development
-      - DATABASE_URL=mongodb://db:27020/personal_chat
+      - PYTHON_ENV=production
+      - DATABASE_URL=mongodb://db:27017/personal_chat
 
   # MongoDB Database Service
   db:
