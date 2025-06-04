@@ -10,7 +10,9 @@ git clone <repository-url>
 cd personal-chat-project
 
 # Initialize submodules (if using langfuse)
-git submodule update --init --recursive
+git submodule update --init --recursive --force
+
+git submodule foreach git checkout main && git submodule update --recursive
 
 # Build and start all services
 docker compose up -d

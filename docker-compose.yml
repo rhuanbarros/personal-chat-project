@@ -1,5 +1,3 @@
-version: '3.8'
-
 name: personal-chat-project
 
 networks:
@@ -12,6 +10,8 @@ services:
     build: 
       context: ./ui
       dockerfile: Dockerfile
+    args:
+      - MONGODB_URI=mongodb://db:27017/personal-chat
     networks:
       - app-network
     ports:
@@ -22,6 +22,7 @@ services:
     environment:
       - NODE_ENV=production
       - BACKEND_URL=http://ai:8000
+      - MONGODB_URI=mongodb://db:27017/personal-chat
 
   # Python FastAPI Backend Service  
   ai:
