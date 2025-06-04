@@ -10,8 +10,8 @@ services:
     build: 
       context: ./ui
       dockerfile: Dockerfile
-    args:
-      - MONGODB_URI=mongodb://db:27017/personal-chat
+      args:
+        MONGODB_URI: mongodb://db:27017/personal-chat
     networks:
       - app-network
     ports:
